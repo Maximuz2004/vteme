@@ -1,0 +1,9 @@
+{% load static %}
+<script src={% static "js/bootstrap.bundle.js" %}></script>
+<nav class="navbar navbar-expand-sm" style="background-color: coral">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'account:login' %}">
+      <img src="{% static 'img/logo.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
+      <span style="color:green">В</span>теме
+    </a>
+</nav>
