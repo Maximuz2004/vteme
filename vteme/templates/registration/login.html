@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Логин{% endblock %}
+{% load user_filters %}
+{% load static %}
+
+{% block content %}
+  <div class="row justify-content-left">
+    <div class="col-md-8 p-5">
+      <div class="card">
+        <div class="card-header">
+          Войти на сайт
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          {% if form.errors %}
+            <p>
+              Логин и пароль не совпадают.
+              Попробуйте еще раз.
+            </p>
+          {% else %}
+            <p>Пожалуйста, введите логин и пароль:</p>
+          {% endif %}
+          {% for field in form %}
+            <div class="form-group row my-3"
+              {% if field.field.required %}
+                 aria-required="true"
+              {% else %}
+                 aria-required="false"
+              {% endif %}
+            >
+              <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}
+                  <span class="required text-danger">*</span>
+                {% endif %}
+              </label>
+              <div>
+                {{ field|addclass:'form-control' }}
+                {% if field.help_text %}
+                  <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                    {{ field.help_text|safe }}
+                  </small>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          <input type="hidden" name="next" value="{{ next }}" />
+          <p><input type="submit" value="Войти"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

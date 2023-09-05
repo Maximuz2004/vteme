@@ -25,6 +25,6 @@ def user_login(request):
         return HttpResponse('Authenticated successfuly')
     return render(
         request,
-        'account/login.html',
+        'account/../templates/registration/login.html',
         {'form': form}
     )
