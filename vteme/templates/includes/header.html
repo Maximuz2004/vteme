@@ -1,8 +1,41 @@
 {% load static %}
-<script src={% static "js/bootstrap.bundle.js" %}></script>
 <nav class="navbar navbar-expand-sm" style="background-color: #262827">
-  <div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
     <a class="navbar-brand" href="{% url 'account:login' %}">
       <img src="{% static 'img/logo_black.png' %}" width="141.2" height="51.2" class="d-inline-block align-top" alt="">
     </a>
+    {% if request.user.is_authenticated %}
+      <ul class="menu">
+        <li class="d-inline m-lg-3 ">
+          {% if section == 'dashboard' %}
+            <span style="color: #6e6d6d;">Мой дашборд</span>
+          {% else %}
+            <a href="{% url 'account:dashboard' %}" style="color: #e2e3e3;">Мой дашборд</a>
+          {% endif %}
+        </li>
+        <li class="d-inline m-lg-3 ">
+          {% if section == 'images' %}
+            <span style="color: #6e6d6d;">Изображения</span>
+          {% else %}
+            <a href="#" style="color: #e2e3e3;">Изображения</a>
+          {% endif %}
+        </li>
+        <li class="d-inline m-lg-3 ">
+          {% if section == 'people' %}
+            <span style="color: #6e6d6d;">Люди</span>
+          {% else %}
+            <a href="#" style="color: #e2e3e3;">Люди</a>
+          {% endif %}
+        </li>
+      </ul>
+    {% endif %}
+    <span class="user" style="color:#d5d6d6">
+      {% if request.user.is_authenticated %}
+        Привет {{ request.user.first_name|default:request.user.username }},
+        <a href="{% url 'account:logout' %}"style="color:#e2e3e3">Выйти</a>
+      {% else %}
+        <a href="{% url 'account:login' %}"style="color:#e2e3e3">Войти</a>
+      {% endif %}
+    </span>
+  </div>
 </nav>
