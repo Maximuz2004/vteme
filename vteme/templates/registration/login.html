@@ -15,7 +15,7 @@
           {% csrf_token %}
           {% if form.errors %}
             <p>
-              Не верные логин или пароль.
+              Неверные логин или пароль.
               Попробуйте еще раз.
             </p>
           {% else %}
@@ -48,6 +48,11 @@
           <input type="hidden" name="next" value="{{ next }}" />
           <p><input type="submit" value="Войти"></p>
         </form>
+        <p>
+          <a href='{% url 'account:password_reset' %}'>
+            Забыли пароль?
+          </a>
+        </p>
       </div>
     </div>
   </div>
