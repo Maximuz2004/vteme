@@ -27,11 +27,29 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Пароли не совпадают')
         return cd['password2']
 
+    def clean_email(self):
+        user_email = self.cleaned_data['email']
+        if User.objects.filter(email=user_email).exists():
+            raise forms.ValidationError(
+                'Пользователь с такой почтой уже существует'
+            )
+        return user_email
+
 
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        user_email = self.cleaned_data['email']
+        filtered_users = User.objects.exclude(
+            id=self.instance.id
+        ).filter(email=user_email)
+        if filtered_users.exists():
+            raise forms.ValidationError('Такой email уже используется')
+        return user_email
+
 
 
 class ProfileEditForm(forms.ModelForm):

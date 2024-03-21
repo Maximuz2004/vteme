@@ -1,7 +1,8 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import render
 
 from .forms import (LoginForm, ProfileEditForm, UserEditForm,
                     UserRegistrationForm)
@@ -23,12 +24,12 @@ def user_login(request):
         if user is None:
             return HttpResponse('Invalid credentials')
         if not user.is_active:
-            return HttpResponse('Diabled account')
+            return HttpResponse('Disabled account')
         login(request, user)
-        return HttpResponse('Authenticated successfuly')
+        return HttpResponse('Authenticated successfully')
     return render(
         request,
-        'account/../templates/registration/login.html',
+        'account/login.html',
         {'form': form}
     )
 
@@ -62,6 +63,7 @@ def register(request):
         {'user_form': user_form}
     )
 
+
 @login_required
 def edit(request):
     user_form = UserEditForm(instance=request.user)
@@ -79,6 +81,9 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, 'Профиль успешно обновлен.')
+        else:
+            messages.error(request, 'Ошибка при обновлении профиля')
     return render(
         request,
         'account/edit.html',
