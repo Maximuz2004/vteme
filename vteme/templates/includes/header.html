@@ -2,7 +2,8 @@
 <nav class="navbar navbar-expand-sm" style="background-color: #262827">
   <div class="container-fluid d-flex justify-content-between align-items-center">
     <a class="navbar-brand" href="{% url 'account:login' %}">
-      <img src="{% static 'img/logo_black.png' %}" width="141.2" height="51.2" class="d-inline-block align-top" alt="">
+      <img src="{% static 'img/logo_black.png' %}" width="141.2" height="51.2"
+           class="d-inline-block align-top" alt="">
     </a>
     {% if request.user.is_authenticated %}
       <ul class="menu">

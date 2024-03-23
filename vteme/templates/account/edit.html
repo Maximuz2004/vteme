@@ -4,14 +4,16 @@
 
 {% block content %}
   <h1>Редактирование вашего аккаунта</h1>
-  <p>
-    Вы можете отредактировать свой аккаунт с помощью
-    этой формыЖ
-  </p>
-  <form method='post' enctype='multipart/form-data'>
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    {% csrf_token %}
-    <p><input type='submit' value='Сохранить изменения'</p>
-  </form>
+  <div class='col-md-7 col-lg-8'>
+    <p>
+      Вы можете отредактировать свой аккаунт с помощью
+      этой формы:
+    </p>
+    <form method='post' enctype='multipart/form-data'>
+      {{ user_form.as_p }}
+      {{ profile_form.as_p }}
+      {% csrf_token %}
+      <p><input type='submit' value='Сохранить изменения'</p>
+    </form>
+  </div>
 {% endblock %}

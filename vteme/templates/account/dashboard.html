@@ -3,6 +3,12 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-  <h1>Dashboard</h1>
-  <p>Welcome to your dashboard.</p>
+  <h1>Дашборд</h1>
+  <p>Добро пожаловать на ваш Дашборд.
+    Вы можете <a href='{% url 'account:edit' %}'>внести изменения</a>
+    в свой профиль. или
+    <a href='{% url 'account:password_change' %}'>
+      изменить свой пароль.
+    </a>
+  </p>
 {% endblock %}
