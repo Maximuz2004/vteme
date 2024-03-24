@@ -8,9 +8,9 @@
   <div class="row justify-content-left">
     <div class="col-md-8 p-5">
       <div class="card">
-        <div class="card-header">
+        <h2 class="card-header">
           Войти на сайт
-        </div>
+        </h2>
         <form method="post">
           {% csrf_token %}
           {% if form.errors %}
@@ -52,11 +52,25 @@
           <input type="hidden" name="next" value="{{ next }}" />
           <p><input type="submit" value="Войти"></p>
         </form>
-        <p>
-          <a href='{% url 'account:password_reset' %}'>
-            Забыли пароль?
+        {#        <button class="w-30 py-2 mb-2 btn btn-outline-secondary rounded-3"#}
+        {#                type="submit">#}
+        {#          <svg class="bi me-1" width="16" height="16"#}
+        {#               xmlns="http://www.w3.org/2000/svg"#}
+        {#               xmlns:xlink="http://www.w3.org/1999/xlink">#}
+        {#            <use xlink:href="{% url 'social:begin' 'google-oauth2' %}">#}
+        {#            </use>#}
+        {#          </svg>#}
+        {#          Войти с учетной записью Google#}
+        {#        </button>#}
+        <p class="button">
+          <a href='{% url 'social:begin' 'google-oauth2' %}'>
+            Войти с аккаунта Google
           </a>
         </p>
+
+        <a href='{% url 'account:password_reset' %}'>
+          Забыли пароль?
+        </a>
       </div>
     </div>
   </div>
