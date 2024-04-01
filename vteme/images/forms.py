@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import BadRequest
 from django.core.files.base import ContentFile
 from django.utils.text import slugify
 import requests
@@ -9,7 +8,7 @@ from .models import Image
 VALID_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png']
 IMAGE_EXT_VALIDATION_ERROR = 'Данный URL не содержит валидную картинку'
 REQUEST_IMAGE_ERROR = 'Произошла ошибка при загрузке изображения: {}'
-REQUEST_UNKNOWN_ERROR = 'Произошла неизвестная ошибкаЖ {}'
+REQUEST_UNKNOWN_ERROR = 'Произошла неизвестная ошибка: {}'
 
 
 class ImageCreateForm(forms.ModelForm):

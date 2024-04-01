@@ -3,7 +3,11 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
 
+from unidecode import unidecode
+
+
 User = get_user_model()
+
 
 class Image(models.Model):
     user = models.ForeignKey(
@@ -31,7 +35,8 @@ class Image(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(unidecode(self.title), allow_unicode=True)
+            print(f'{self.slug=}')
         super().save(*args, **kwargs)
 
     def __str__(self):

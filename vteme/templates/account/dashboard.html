@@ -4,6 +4,18 @@
 
 {% block content %}
   <h1>Дашборд</h1>
+  {% with total_images_created=request.user.images_created.count %}
+    <p>
+      Вы добавили в закладки {{ total_images_created }} изображений.
+    </p>
+  {% endwith %}
+  <p>
+    Переместите изображение на эту кнопку, чтобы добавить в закладки ->
+    <a href="javascript:{% include 'images/bookmarklet_launcher.js' %}"
+       class="btn btn-primary">
+      В закладки!
+    </a>
+  </p>
   <p>Добро пожаловать на ваш Дашборд.
     Вы можете <a href='{% url 'account:edit' %}'>внести изменения</a>
     в свой профиль. или
