@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ image.title }}{% endblock %}
+
+{% block content %}
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-lg-6">
+      {% load thumbnail %}
+      <a href="{{ image.image.url }}">
+        <img src="{% thumbnail image.image 300x0 quality=100 %}"
+             class="img-fluid border rounded-3 shadow-lg mb-4"
+             width="700" height="500" loading="lazy"
+        >
+      </a>
+    </div>
+    <div class="col-lg-6">
+      <h2 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+        {{ image.title }}
+      </h2>
+      {% with total_likes=image.users_like.count %}
+        <div class="image-info">
+          <div>
+            <span class="badge bg-success">
+              {{ total_likes }} like{{ total_likes|pluralize }}
+            </span>
+          </div>
+          {{ image.description|linebreaks }}
+        </div>
+        <div class="images">
+          {% for user in image.users_like.all %}
+            <div>
+              {% if user.profile.photo %}
+                <img src="{{ user.profile.photo.url }}">
+              {% endif %}
+              <p>{{ user.first_name }}</p>
+            </div>
+          {% empty %}
+            Никто еще не лайкнул это изображение
+          {% endfor %}
+        </div>
+      {% endwith %}
+    </div>
+  </div>
+{% endblock %}

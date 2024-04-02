@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 from unidecode import unidecode
 
@@ -38,6 +39,9 @@ class Image(models.Model):
             self.slug = slugify(unidecode(self.title), allow_unicode=True)
             print(f'{self.slug=}')
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('images:detail', args=[self.id, self.slug])
 
     def __str__(self):
         return self.title[:50]
