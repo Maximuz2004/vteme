@@ -11,29 +11,37 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<header>
-  {% include 'includes/header.html' %}
-</header>
-<main>
-  {% if messages %}
-    <div class="alert alert-secondary alert-dismissible fade show" role='alert'>
-      {% for message in messages %}
-        <div class="{{ message.tags }}">
-          {{ message|safe }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
+  <header>
+    {% include 'includes/header.html' %}
+  </header>
+  <main>
+    {% if messages %}
+      <div class="alert alert-secondary alert-dismissible fade show" role='alert'>
+        {% for message in messages %}
+          <div class="{{ message.tags }}">
+            {{ message|safe }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="container py-5">
+      {% block content %}
+        Контент не подвезли :(
+      {% endblock %}
     </div>
-  {% endif %}
-  <div class="container py-5">
-    {% block content %}
-      Контент не подвезли :(
-    {% endblock %}
-  </div>
-</main>
-
-<footer>
-  {% include 'includes/footer.html' %}
-</footer>
+  </main>
+  <footer>
+    {% include 'includes/footer.html' %}
+  </footer>
+  <script src='//cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js'>
+  </script>
+  <script>
+    const csrftoken = Cookies.get('csrftoken')
+    document.addEventListener('DOMContentLoaded', (event) => {
+        {% block domready %}
+        {% endblock %}
+    })
+  </script>
 </body>
 </html>
