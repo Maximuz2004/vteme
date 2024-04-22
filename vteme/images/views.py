@@ -57,6 +57,7 @@ def image_like(request):
             pass
         return JsonResponse(STATUS_ERROR)
 
+
 @login_required
 def image_list(request):
     images = Image.objects.all()

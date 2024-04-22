@@ -18,7 +18,7 @@
           {% if section == 'images' %}
             <span style="color: #6e6d6d;">Изображения</span>
           {% else %}
-            <a href="#" style="color: #e2e3e3;">Изображения</a>
+            <a href='{% url 'images:list' %}' style="color: #e2e3e3;">Изображения</a>
           {% endif %}
         </li>
         <li class="d-inline m-lg-3 ">
