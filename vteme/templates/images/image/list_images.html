@@ -1,16 +1,44 @@
 {% load thumbnail %}
-{% for image in images %}
-  <div class="image">
-    <a href="{{ image.get_absolute_url }}">
-      {% thumbnail image.image 300x300 crop="smart" as im %}
-      <a href="{{ image.get_absolute_url }}">
-        <img src="{{ im.url }}">
-      </a>
-    </a>
-    <div class="info">
-      <a href="{{ image.get_absolute_url }}" class="title">
-        {{ image.title }}
-      </a>
+<div class="row">
+  {% for image in images %}
+{#  <div class="image">#}
+{#    <a href="{{ image.get_absolute_url }}">#}
+{#      {% thumbnail image.image 300x300 crop="smart" as im %}#}
+{#      <a href="{{ image.get_absolute_url }}">#}
+{#        <img src="{{ im.url }}">#}
+{#      </a>#}
+{#    </a>#}
+{#    <div class="info">#}
+{#      <a href="{{ image.get_absolute_url }}" class="title">#}
+{#        {{ image.title }}#}
+{#      </a>#}
+{#    </div>#}
+{#  </div>#}
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <div class="card">
+        <svg
+          class="bd-placeholder-img card-img-top"
+          width="100%" height="200"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img" aria-label="Placeholder: Image cap"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false">
+          <title>{{ image.title }}</title>
+          {% if image.image %}
+            <image href="{{ image.image.url }}" y='10%' width="100%" height="100%"/>
+          {% else %}
+            <text x="35%" y="50%" fill="#dee2e6" dy=".3em">
+              No image
+            </text>
+          {% endif %}
+        </svg>
+        <div class="card-body">
+          <a href='{{ image.get_absolute_url }}'>
+            <h5 class="card-title">{{ image.title }}</h5>
+          </a>
+          <p class="card-text">{{ image.description }}</p>
+        </div>
+      </div>
     </div>
-  </div>
-{% endfor %}
+  {% endfor %}
+</div>
