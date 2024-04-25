@@ -5,13 +5,21 @@
 {% block content %}
   <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
     <div class="col-lg-6">
-      {% load thumbnail %}
-      <a href="{{ image.image.url }}">
-        <img src="{% thumbnail image.image 300x0 quality=100 %}"
-             class="img-fluid border rounded-3 shadow-lg mb-4"
-             width="700" height="500" loading="lazy"
-        >
-      </a>
+      {% if image.image %}
+        {% load thumbnail %}
+        <a href="{{ image.image.url }}">
+          <img src="{% thumbnail image.image 300x0 quality=100 %}"
+               class="img-fluid border rounded-3 shadow-lg mb-4"
+               width="700" height="500" loading="lazy"
+          >
+        </a>
+      {% else %}
+        <div class="card">
+          <text x="35%" y="50%" fill="#dee2e6" dy=".3em">
+            No image
+          </text>
+        </div>
+      {% endif %}
     </div>
     <div class="col-lg-6">
       <h2 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
