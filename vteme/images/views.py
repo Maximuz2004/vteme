@@ -5,12 +5,14 @@ from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from actions.utils import create_action
 from .forms import ImageCreateForm
 from .models import Image
 
-IMAGE_SAVE_MESSAGE = 'Изображение сохранено.'
+IMAGE_SAVE_MESSAGE = 'Изображение добавлено в закладки'
 STATUS_OK = {'status': 'ok'}
 STATUS_ERROR = {'status': 'error'}
+
 
 @login_required
 def image_create(request):
@@ -22,6 +24,7 @@ def image_create(request):
             new_image = form.save(commit=False)
             new_image.user = request.user
             new_image.save()
+            create_action(request.user, IMAGE_SAVE_MESSAGE, new_image)
             messages.success(request, IMAGE_SAVE_MESSAGE)
             return redirect(new_image.get_absolute_url())
     return render(
