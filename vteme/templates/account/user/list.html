@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}Люди{% endblock %}
+{% block content %}
+  <h2 class="pb-2 border-bottom">Люди</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for user in users %}
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-light rounded-4 shadow-lg">
+          <div class="image-likes">
+            <a href="{{ user.get_absolute_url }}" class="d-flex justify-content-center align-items-center" style="height: 100%;">
+              <img src="{% thumbnail user.profile.photo 180x180 %}" class="p-5 w-100 h-100">
+            </a>
+          </div>
+          <div class="info border-top mt-3 pt-3">
+            <a href="{{ user.get_absolute_url }}" class="d-flex align-items-center p-4 bg-light rounded">
+              <i class="bi bi-person me-2"></i>
+              <span>{{ user.get_full_name }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if users.has_other_pages %}
+    <div class="pagination">
+      {% if users.has_previous %}
+        <a href="?page=1">&laquo; Первая</a>
+        <a href="?page={{ users.previous_page_number }}">Предыдущая</a>
+      {% endif %}
+      <span class="current">Страница {{ users.number }} из {{ users.paginator.num_pages }}</span>
+      {% if users.has_next %}
+        <a href="?page={{ users.next_page_number }}">Следующая</a>
+        <a href="?page={{ users.paginator.num_pages }}">Последняя &raquo;</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}

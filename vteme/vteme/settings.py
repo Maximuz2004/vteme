@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+from django.urls import reverse_lazy
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,6 +23,13 @@ SECRET_KEY = os.getenv('SECRET_KEY',default='default')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda user: reverse_lazy(
+        'account:user_detail',
+        args=[user.username]
+    )
+}
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='*').split(' ')
 

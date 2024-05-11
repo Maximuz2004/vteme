@@ -241,12 +241,12 @@ a.like, a.follow { float:right; margin-top:-8px; }
 #people-list img {
     width:180px;
     height:180px;
-    border-radius:50%;
+    border-radius:30%;
     margin-bottom:20px;
 }
 #people-list .user {
     width:180px;
-    float:left;
+    float:right;
     overflow:auto;
     padding:10px;
 }
@@ -274,4 +274,8 @@ img.user-detail {
 .action .date {
     font-style:italic;
     color:#ccc;
+}
+.small-image {
+    width: 100px;
+    height: auto;
 }
