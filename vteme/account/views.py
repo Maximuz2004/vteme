@@ -11,10 +11,15 @@ from django.views.decorators.http import require_POST
 from .forms import (LoginForm, ProfileEditForm, UserEditForm,
                     UserRegistrationForm)
 from .models import Contact, Profile
+from actions.models import Action
+from actions.utils import create_action
 
 
+NEW_ACCOUNT_MESSAGE = 'Создан новый аккаунт'
+NUMBER_OF_ACTIONS = 10
 STATUS_OK = {'status': 'ok'}
 STATUS_ERROR = {'status': 'error'}
+FOLLOWING_MESSAGE = 'Подписан на'
 
 def user_login(request):
     form = LoginForm()
@@ -43,10 +48,18 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list('id', flat=True)
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+    actions = actions.select_related(
+        'user',
+        'user__profile'
+    )[:NUMBER_OF_ACTIONS].prefetch_related('target')[:NUMBER_OF_ACTIONS]
     return render(
         request,
         'account/dashboard.html',
-        {'section': 'dashboard'}
+        {'section': 'dashboard', 'actions': actions}
     )
 
 
@@ -59,6 +72,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             Profile.objects.create(user=new_user)
+            create_action(new_user, NEW_ACCOUNT_MESSAGE)
             return render(
                 request,
                 'account/register_done.html',
@@ -151,6 +165,7 @@ def user_follow(request):
                 user_from=request.user,
                 user_to=user
             )
+            create_action(request.user, FOLLOWING_MESSAGE, user)
         else:
             Contact.objects.filter(
                 user_from=request.user,

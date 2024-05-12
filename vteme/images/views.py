@@ -10,6 +10,7 @@ from .forms import ImageCreateForm
 from .models import Image
 
 IMAGE_SAVE_MESSAGE = 'Изображение добавлено в закладки'
+LIKES_MESSAGE = 'Понравилось'
 STATUS_OK = {'status': 'ok'}
 STATUS_ERROR = {'status': 'error'}
 
@@ -53,6 +54,7 @@ def image_like(request):
             image = Image.objects.get(id=image_id)
             if action == 'like':
                 image.users_like.add(request.user)
+                create_action(request.user, LIKES_MESSAGE, image)
             else:
                 image.users_like.remove(request.user)
             return JsonResponse(STATUS_OK)
